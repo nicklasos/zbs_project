@@ -1,0 +1,11 @@
+#back-button{
+    margin-bottom: 5px;
+}
+
+.logsInside {
+    display: none;
+}
+
+.clickable:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="/styles/client_style.css" type="text/css">
+
+{{#each clients}}
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title">{{name}}</h4>
+            <a href="clients/{{name}}" class="btn btn-primary">Orders</a>
+        </div>
+    </div>
+{{/each}}
+<script src="/js/clients.js"></script>

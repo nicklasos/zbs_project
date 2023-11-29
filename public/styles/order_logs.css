@@ -1,0 +1,16 @@
+.navbar {
+    display: none;
+}
+
+.ok {
+    background-color: #C0D890;
+}
+.log {
+    background-color: #D9E9FF;
+}
+.error{
+    background-color: #ED4337;
+}
+.buy_success{
+    background-color: #63C57E;
+}

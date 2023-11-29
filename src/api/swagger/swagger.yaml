@@ -1,0 +1,252 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: ZBS
+  description: Zearch Buy Ssend
+paths:
+  /orders:
+    post:
+      x-swagger-router-controller: orders
+      operationId: create
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Order'
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/Error'
+  /retry:
+    post:
+      x-swagger-router-controller: orders
+      operationId: retry
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Retry'
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/SuccessResponseCreateOrder'
+        default:
+          description: Unexpected Error
+          schema:
+            $ref: '#/definitions/Error'
+
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /api/1.0
+schemes:
+ - https
+
+
+definitions:
+  Error:
+    type: object
+    description: Error
+    properties:
+      code:
+        type: integer
+        description: Error code
+        example: -1
+      message:
+        type: string
+        description: Humman readable error
+        example: Unexpected error
+    required:
+      - code
+      - message
+  SuccessResponseCreateOrder:
+    type: object
+    title: Success Response
+    properties:
+      order_id:
+        type: integer
+        description: Unique Id of performed orders
+        example: '23452354'
+    required:
+      - order_id
+  SuccessResponse:
+    type: object
+    title: Success Response
+    properties:
+      result:
+        type: string
+        description: Operation result
+        example: 'success'
+    required:
+      - result
+  Retry:
+    type: object
+    title: Retry order
+    required:
+      - order_id
+      - sender
+    properties:
+      order_id:
+        type: integer
+        description: Order id to restart
+        example: '1234'
+      sender:
+        $ref: '#/definitions/Sender'
+      recipient:
+        $ref: '#/definitions/Recipient'
+  Order:
+    type: object
+    title: Order
+    properties:
+      items:
+        type: array
+        title: Items
+        items:
+            $ref: '#/definitions/Item'
+      recipient:
+        $ref: '#/definitions/Recipient'
+      sender:
+        $ref: '#/definitions/Sender'
+      config:
+        $ref: '#/definitions/Config'
+    required:
+      - items
+      - recipient
+      - sender
+      - config
+  Item:
+    type: object
+    title: Order Item
+    properties:
+      hash:
+        type: string
+        description: Name | Skin (Ware)
+        example: 'AWP | Dragon Lore (Factory New)'
+      count:
+        type: integer
+        description: Number of items to buy
+        example: 1
+      payload:
+        type: string
+        description: Data for tracking. Will return in any callback.
+        example: 'oreder item #1'
+      max_price:
+        type: number
+        description: If omitted, price will not be capped.
+        example: 10.00
+      game:
+        type: string
+        default: csgo
+        enum:
+          - csgo
+          - dota
+          - h1z1
+          - pubg
+        description: Game name, csgo or dota
+        example: dota
+    required:
+      - hash
+      - payload
+  Recipient:
+    type: object
+    title: Recipient
+    description: Address of items delivery
+    properties:
+      trade_url:
+        type: string
+        description: Valid Steam trade url.
+        example: 'https://steamcommunity.com/tradeoffer/new/?partner=<partner>&token=<token>'
+    required:
+      - trade_url
+  Sender:
+    type: object
+    description: Identity of sender
+    properties:
+      api_key:
+        type: string
+        example: XXXX-XXXX-XXXX-XXXX
+      agent_id:
+        type: string
+        description: Name/Id of agent that requests orders
+        example: James Bond
+    required:
+      - api_key
+      - agent_id
+  Config:
+    type: object
+    description: Additional orders configuration
+    properties:
+      game:
+        type: string
+        default: multi
+        enum:
+          - csgo
+          - dota
+          - h1z1
+          - pubg
+          - multi
+        description: Game name, csgo or dota
+        example: dota
+      comment:
+        type: string
+        description: This message will be sent with Steam trade to recipient
+        example: Items request from csgo.com
+      priority:
+        type: integer
+        default: 100
+        description: Order fulfill priority
+        example: 100
+      quality:
+        type: string
+        default: same
+        description: Strategy of selecting ware/quality
+        enum:
+          - same
+          - cheap
+          - good
+          - normal
+        example: same
+      sync:
+        type: boolean
+        default: false
+        description: Run task synchronous
+      flow:
+        type: string
+        default: buy
+        description: ZBS flow
+        enum:
+          - buy
+          - stickers
+          - presents
+        example: buy
+      vendors:
+        type: array
+        description: List of prefered clients to buy items with same price from different clients. If ommited and price is same - vendor is choosen randomly.
+        items:
+          type: string
+          description: Vendor name
+        example:
+          - OpSkins
+          - BitSkins
+      force_vendors:
+        type: boolean
+        description: If true, items will be purchased only from clients listed in 'clients'
+        default: false
+        example: false
+    required:
+      - comment

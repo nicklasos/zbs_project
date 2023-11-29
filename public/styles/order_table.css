@@ -1,0 +1,15 @@
+.container {
+    width: 100%;
+}
+
+.navbar {
+    display: none;
+}
+
+.logsInside {
+    display: none;
+}
+
+.clickable:hover{
+    cursor: pointer;
+}

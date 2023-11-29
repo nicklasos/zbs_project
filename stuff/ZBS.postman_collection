@@ -1,0 +1,71 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ZBS",
+		"_postman_id": "e4dba23c-d191-b1be-1959-a47cc17c7b23",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create order",
+			"request": {
+				"url": "http://138.68.76.220:3002/api/1.0/orders",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"items\": [\n    {\n      \"hash\": \"Sealed Graffiti | Jump Shot (Brick Red)\",\n      \"count\": 1,\n      \"payload\": \"3\",\n      \"max_price\": 1\n    }\n  ],\n  \"recipient\": {\n    \"trade_url\": \"https://steamcommunity.com/tradeoffer/new/?partner=68728495&token=rNzBh96E\"\n  },\n  \"sender\": {\n    \"api_key\": \"foo\",\n    \"agent_id\": \"James Bond\"\n  },\n  \"config\": {\n    \"comment\": \"Items request from www.killcase.com\",\n    \"priority\": 100,\n    \"quality\": \"same\",\n    \"vendors\": [\n      \"OpSkins\"\n    ],\n    \"force_vendors\": false\n  }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create order from site",
+			"request": {
+				"url": "localhost:8000/social/trade",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n \"trade_url\": \"https://steamcommunity.com/tradeoffer/new/?partner=380424640&token=L4TpqLhS\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Retry order",
+			"request": {
+				"url": "http://localhost:3002/api/1.0/retry",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"order_id\": 38,\n\t\"sender\": {\n\t    \"api_key\": \"foo\",\n\t    \"agent_id\": \"James Bond\"\n\t},\n\t\"recipient\": {\n    \t\"trade_url\": \"https://foo/test\"\n\t}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,30 @@
+<link rel="stylesheet" type="text/css" href="/styles/order_table.css">
+{{#if order.screenshot}}
+    <a href="/{{order.screenshot}}" target="_blank">Tradeoffer screenshot</a>
+{{/if}}
+<table class="table" id="orders">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>hash</th>
+        <th>status</th>
+        <th><button type="button" class="btn btn-default btn-sm" id="page_reload">Reload</button></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each orderItems}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{hash}}</td>
+            <td class="data_color" colspan="2">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="10"
+                         aria-valuemin="0" aria-valuemax="100" style="width:40%; background: yellow" data-status="{{status}}">
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+<script src="/js/order_table.js"></script>

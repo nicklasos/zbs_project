@@ -1,0 +1,48 @@
+{
+    "apps": [
+        {
+            "name": "zbs",
+            "script": "dist/index.js",
+            "exec_mode": "cluster",
+            "instances": 1,
+            "env": {},
+            "env_production": {
+                "NODE_ENV": "production"
+            }
+        }
+    ],
+    "deploy": {
+        "production": {
+            "user": "root",
+            "host": "207.154.251.153",
+            "ref": "origin/master",
+            "repo": "git@github.com:nikitaek/zbs.git",
+            "path": "/var/www/zbs/",
+            "post-deploy": "npm install && knex migrate:latest --env production && gulp build && pm2 startOrRestart ecosystem.json --env production"
+        },
+        "production-killcase": {
+            "user": "root",
+            "host": "138.68.76.220",
+            "ref": "origin/master",
+            "repo": "git@github.com:nikitaek/zbs.git",
+            "path": "/var/www/zbs/",
+            "post-deploy": "npm install && knex migrate:latest --env production && gulp build && pm2 startOrRestart ecosystem.json --env production"
+        },
+        "real-zbs": {
+            "user": "root",
+            "host": "138.197.184.137",
+            "ref": "origin/master",
+            "repo": "git@github.com:nikitaek/zbs.git",
+            "path": "/var/www/zbs/",
+            "post-deploy": "npm install && knex migrate:latest --env production && gulp build && pm2 startOrRestart ecosystem.json --env production"
+        },
+        "opencsgo": {
+            "user": "root",
+            "host": "139.59.240.224",
+            "ref": "origin/master",
+            "repo": "git@github.com:nikitaek/zbs.git",
+            "path": "/var/www/zbs/",
+            "post-deploy": "npm install && knex migrate:latest --env production && gulp build && pm2 startOrRestart ecosystem.json --env production"
+        }
+    }
+}
